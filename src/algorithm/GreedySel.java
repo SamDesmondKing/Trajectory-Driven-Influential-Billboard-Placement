@@ -23,7 +23,8 @@ public class GreedySel {
 	}
 
 	public void generateSolution() {
-
+		double costSoFar = 0;
+		
 		//Create a sorted collection of billboards ordered (dec) by UMI.
 		
 		// 1. Create a hashmap of billboards and their UMIs
@@ -49,5 +50,19 @@ public class GreedySel {
 		for (int i = 0; i < sorted_billboards.size(); i++) {
 			System.out.println("ID: " + sorted_billboards.get(i).getKey().getBillboardID() + " UMI: " + sorted_billboards.get(i).getValue());
 		}
+		
+		// (1.3 -> 1.8)
+		for (int i = 0; i < sorted_billboards.size(); i++) {
+			if (costSoFar + sorted_billboards.get(i).getKey().getPrice() <= this.budget) {
+				resultList.add(sorted_billboards.get(i).getKey());
+			}
+		}
+		
+		// 1.9
+		
+		
+		
+		// 1.10 - 1.13
+		
 	}
 }
