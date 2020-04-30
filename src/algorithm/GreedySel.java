@@ -11,9 +11,9 @@ import java.util.Map.Entry;
 
 public class GreedySel {
 
-	public ArrayList<Billboard> resultList;
+	public ArrayList<Billboard> resultList; 
 	private ArrayList<Billboard> billboardList;
-	private int budget;
+	private int budget; 
 
 	public GreedySel(int budget, ArrayList<Billboard> billboardList) {
 		this.budget = budget;
@@ -24,9 +24,9 @@ public class GreedySel {
 	public void generateSolution() {
 		int costSoFar = 0;
 		int infSoFar = 0;
-
-		// Create a sorted collection of billboards ordered (dec) by UMI.
-
+		
+		//Create a sorted collection of billboards ordered (dec) by UMI.
+		
 		// 1. Create a hashmap of billboards and their UMIs
 		HashMap<Billboard, Double> billboardMap = new HashMap<Billboard, Double>();
 		double UMI;
@@ -34,20 +34,19 @@ public class GreedySel {
 			UMI = (double) i.getInf() / (double) i.getPrice();
 			billboardMap.put(i, UMI);
 		}
-
+		
 		// 2. Convert to ArrayList sorted by UMI
-		ArrayList<Map.Entry<Billboard, Double>> sorted_billboards = new ArrayList<Map.Entry<Billboard, Double>>(
-				billboardMap.entrySet());
-
+		ArrayList<Map.Entry<Billboard, Double>> sorted_billboards = new ArrayList<Map.Entry<Billboard, Double>>(billboardMap.entrySet());
+		
 		Collections.sort(sorted_billboards, new Comparator<Map.Entry<Billboard, Double>>() {
 			public int compare(Entry<Billboard, Double> o1, Entry<Billboard, Double> o2) {
 				return Double.compare(o1.getValue(), o2.getValue());
 			}
-		});
-
+		} );
+		
 		// 3. Reverse so that the highest UMI is accessed first.
 		Collections.reverse(sorted_billboards);
-
+		
 		// (1.3 -> 1.8)
 		for (int i = 0; i < sorted_billboards.size(); i++) {
 			if (costSoFar + sorted_billboards.get(i).getKey().getPrice() <= this.budget) {
@@ -56,17 +55,16 @@ public class GreedySel {
 				infSoFar += sorted_billboards.get(i).getKey().getInf();
 			}
 		}
-
+		
 		// 1.9 - store the best single billboard solution
 		Billboard bestSingleSolution = new Billboard("placeholder", 0, 0);
-
+		
 		for (int i = 0; i < sorted_billboards.size(); i++) {
-			if (sorted_billboards.get(i).getKey().getInf() > bestSingleSolution.getInf()
-					&& sorted_billboards.get(i).getKey().getPrice() <= this.budget) {
+			if (sorted_billboards.get(i).getKey().getInf() > bestSingleSolution.getInf() && sorted_billboards.get(i).getKey().getPrice() <= this.budget) {
 				bestSingleSolution = sorted_billboards.get(i).getKey();
 			}
 		}
-
+		
 		// 1.10 - 1.13
 		if (bestSingleSolution.getInf() > infSoFar) {
 			ArrayList<Billboard> BSS = new ArrayList<Billboard>();
