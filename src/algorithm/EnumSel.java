@@ -35,18 +35,12 @@ public class EnumSel {
 		//Run phase two. 2.6 - 2.9
 		this.enumSelPhaseTwo(resultTwo);
 		
-//		for (int i = 0; i < H2.size(); i++) {
-//			this.resultList.add(H2.get(i));
-//		}
-		
 		//Compare and return result. 2.10 - 2.13
 		if (this.calculateSubsetInfluence(H1) > this.calculateSubsetInfluence(H2)) {
-			System.out.println("Option 1");
 			for (int i = 0; i < H1.size(); i++) {
 				this.resultList.add(H1.get(i));
 			}
 		} else {
-            System.out.println("Option 2");
 			for (int i = 0; i < H2.size(); i++) {
 				this.resultList.add(H2.get(i));
 			}
@@ -63,9 +57,11 @@ public class EnumSel {
 				ArrayList<Billboard> greedyResult = greedySel.getResult();
 				
 				for (int j = 0; j < greedyResult.size(); j++) {
-					subset.add(greedyResult.get(j));
+					if (!subset.contains(greedyResult.get(j))) {
+						subset.add(greedyResult.get(j));
+					}
 				}
-				
+
 				if (this.H2.isEmpty()) {
 					for (int j = 0; j < subset.size(); j++) {
 						this.H2.add(subset.get(j));
@@ -97,29 +93,26 @@ public class EnumSel {
 		return bestSubset;
 	}
 
-	public void getSubsets(ArrayList<Billboard> billboardList, int k, int idx, ArrayList<Billboard> current,
-			ArrayList<ArrayList<Billboard>> solution) {
-		// successful stop clause
-		if (current.size() == k) {
-			solution.add(new ArrayList<>(current));
+	public void getSubsets(ArrayList<Billboard> billboardList, int tau, int j, ArrayList<Billboard> subset,
+			ArrayList<ArrayList<Billboard>> result) {
+		if (subset.size() == tau) {
+			result.add(new ArrayList<>(subset));
 			return;
 		}
-		// unseccessful stop clause
-		if (idx == billboardList.size())
+		if (j == billboardList.size()) {
 			return;
-		Billboard x = billboardList.get(idx);
-		current.add(x);
-		// "guess" x is in the subset
-		getSubsets(billboardList, k, idx + 1, current, solution);
-		current.remove(x);
-		// "guess" x is not in the subset
-		getSubsets(billboardList, k, idx + 1, current, solution);
+		}
+		Billboard x = billboardList.get(j);
+		subset.add(x);
+		getSubsets(billboardList, tau, j + 1, subset, result);
+		subset.remove(x);
+		getSubsets(billboardList, tau, j + 1, subset, result);
 	}
 
 	public ArrayList<ArrayList<Billboard>> getSubsets(ArrayList<Billboard> billboardList, int k) {
-		ArrayList<ArrayList<Billboard>> res = new ArrayList<>();
-		getSubsets(billboardList, k, 0, new ArrayList<Billboard>(), res);
-		return res;
+		ArrayList<ArrayList<Billboard>> result = new ArrayList<>();
+		getSubsets(billboardList, k, 0, new ArrayList<Billboard>(), result);
+		return result;
 	}
 
 	// Calculate total influence of a given subset.
