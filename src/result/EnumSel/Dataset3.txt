@@ -1,0 +1,3 @@
+budget:50
+influence:286
+Running time (ms):14

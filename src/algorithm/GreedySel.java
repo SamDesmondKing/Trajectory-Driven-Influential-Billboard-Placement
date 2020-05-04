@@ -53,6 +53,7 @@ public class GreedySel {
 				resultList.add(sorted_billboards.get(i).getKey());
 				costSoFar += sorted_billboards.get(i).getKey().getPrice();
 				infSoFar += sorted_billboards.get(i).getKey().getInf();
+				//System.out.println(sorted_billboards.get(i).getKey().getBillboardID());
 			}
 		}
 		
@@ -60,15 +61,47 @@ public class GreedySel {
 		Billboard bestSingleSolution = new Billboard("placeholder", 0, 0);
 		
 		for (int i = 0; i < sorted_billboards.size(); i++) {
-			if (sorted_billboards.get(i).getKey().getInf() > bestSingleSolution.getInf() && sorted_billboards.get(i).getKey().getPrice() <= this.budget) {
+			if (sorted_billboards.get(i).getKey().getInf() > bestSingleSolution.getInf() && sorted_billboards.get(i).getKey().getPrice() < this.budget) {
 				bestSingleSolution = sorted_billboards.get(i).getKey();
 			}
 		}
 		
 		// 1.10 - 1.13
 		if (bestSingleSolution.getInf() > infSoFar) {
-			ArrayList<Billboard> BSS = new ArrayList<Billboard>();
-			this.resultList = BSS;
+			this.resultList.clear();
+			this.resultList.add(bestSingleSolution);
 		}
+		
+		//System.out.println(this.resultList.size());
+		//System.out.println(calculateSubsetPrice(resultList));
+		//System.out.println(calculateSubsetInfluence(resultList));
+		
+//		for (int i = 0; i < resultList.size(); i++) {
+//			System.out.println(resultList.get(i).getBillboardID());
+//		}
+//		System.out.println("");
+		
+	}
+	
+	public ArrayList<Billboard> getResult() {
+		return this.resultList;
+	}
+	
+	// Calculate total influence of a given subset.
+	public double calculateSubsetInfluence(ArrayList<Billboard> subset) {
+		int influence = 0;
+		for (int i = 0; i < subset.size(); i++) {
+			influence += subset.get(i).getInf();
+		}
+		return influence;
+	}
+
+	// Calculate total price of a given subset.
+	public int calculateSubsetPrice(ArrayList<Billboard> subset) {
+		int price = 0;
+		for (int i = 0; i < subset.size(); i++) {
+			price += subset.get(i).getPrice();
+		}
+		return price;
 	}
 }
