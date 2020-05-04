@@ -2,10 +2,12 @@ package algorithm;
 
 import entity.Billboard;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class EnumSel {
+	
+	//TODO Bug with H1
+	//TODO Too slow - need to improve efficiency. 
+	//TODO Need to add up to tau sets (sets of one, sets of two etc) in step 1.
 
 	public ArrayList<Billboard> resultList; 
 	private ArrayList<Billboard> billboardList;
@@ -17,7 +19,7 @@ public class EnumSel {
 		this.budget = budget;
 		this.billboardList = billboardList;
 		this.resultList = new ArrayList<>();
-		this.tau = 2;
+		this.tau = 3;
 		this.H2 = new ArrayList<Billboard>();
 	}
 
@@ -26,6 +28,7 @@ public class EnumSel {
 		//Enumerate all subsets of size tau
 		ArrayList<ArrayList<Billboard>> result = getSubsets(billboardList, this.tau);
 		
+		//TODO Bug here - H1 incorrect in dataset 1.
 		//Save best subset result - 2.4
 		ArrayList<Billboard> H1 = this.getBestSubset(result);
 				
@@ -47,6 +50,7 @@ public class EnumSel {
 		}
 	}
 	
+	//Needs time improvement.
 	public void enumSelPhaseTwo(ArrayList<ArrayList<Billboard>> input) {
 		for (int i = 0; i < input.size(); i++) {
 			ArrayList<Billboard> subset = input.get(i);
@@ -93,6 +97,12 @@ public class EnumSel {
 		return bestSubset;
 	}
 
+	public ArrayList<ArrayList<Billboard>> getSubsets(ArrayList<Billboard> billboardList, int tau) {
+		ArrayList<ArrayList<Billboard>> result = new ArrayList<>();
+		getSubsets(billboardList, tau, 0, new ArrayList<Billboard>(), result);
+		return result;
+	}
+	
 	public void getSubsets(ArrayList<Billboard> billboardList, int tau, int j, ArrayList<Billboard> subset,
 			ArrayList<ArrayList<Billboard>> result) {
 		if (subset.size() == tau) {
@@ -107,12 +117,6 @@ public class EnumSel {
 		getSubsets(billboardList, tau, j + 1, subset, result);
 		subset.remove(x);
 		getSubsets(billboardList, tau, j + 1, subset, result);
-	}
-
-	public ArrayList<ArrayList<Billboard>> getSubsets(ArrayList<Billboard> billboardList, int k) {
-		ArrayList<ArrayList<Billboard>> result = new ArrayList<>();
-		getSubsets(billboardList, k, 0, new ArrayList<Billboard>(), result);
-		return result;
 	}
 
 	// Calculate total influence of a given subset.
