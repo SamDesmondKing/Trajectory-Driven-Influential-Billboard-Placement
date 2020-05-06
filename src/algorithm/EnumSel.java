@@ -4,9 +4,7 @@ import entity.Billboard;
 import java.util.ArrayList;
 
 public class EnumSel {
-	
-	//TODO Bug with H1
-	//TODO Too slow - need to improve efficiency. 
+
 	//TODO Need to add up to tau sets (sets of one, sets of two etc) in step 1.
 
 	public ArrayList<Billboard> resultList; 
@@ -19,16 +17,18 @@ public class EnumSel {
 		this.budget = budget;
 		this.billboardList = billboardList;
 		this.resultList = new ArrayList<>();
-		this.tau = 3;
+		this.tau = 2;
 		this.H2 = new ArrayList<Billboard>();
 	}
 
 	public void generateSolution() {
 		
-		//Enumerate all subsets of size tau
-		ArrayList<ArrayList<Billboard>> result = getSubsets(billboardList, this.tau);
-		
-		//TODO Bug here - H1 incorrect in dataset 1.
+		//Enumerate all subsets not larger than size tau
+		ArrayList<ArrayList<Billboard>> result = new ArrayList<ArrayList<Billboard>>();
+		for (int i = 1; i <= this.tau; i++) {
+			result.addAll(getSubsets(billboardList, i));
+		}
+				
 		//Save best subset result - 2.4
 		ArrayList<Billboard> H1 = this.getBestSubset(result);
 				
@@ -50,7 +50,6 @@ public class EnumSel {
 		}
 	}
 	
-	//Needs time improvement.
 	public void enumSelPhaseTwo(ArrayList<ArrayList<Billboard>> input) {
 		for (int i = 0; i < input.size(); i++) {
 			ArrayList<Billboard> subset = input.get(i);
