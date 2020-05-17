@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 public class EnumSel {
 
-	//TODO Need to add up to tau sets (sets of one, sets of two etc) in step 1.
-
 	public ArrayList<Billboard> resultList; 
 	private ArrayList<Billboard> billboardList;
 	private int budget;
