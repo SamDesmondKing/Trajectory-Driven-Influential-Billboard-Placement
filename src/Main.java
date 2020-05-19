@@ -53,8 +53,6 @@ public class Main {
             long time = endTime - startTime;
             ArrayList<Billboard> resultSet = partSel.resultList;
             recordResult(filePath, time, resultSet);
-            //TODO REMOVE ME
-            break;
         }
     }
 
