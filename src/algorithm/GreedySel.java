@@ -70,17 +70,7 @@ public class GreedySel {
 		if (bestSingleSolution.getInf() > infSoFar) {
 			this.resultList.clear();
 			this.resultList.add(bestSingleSolution);
-		}
-		
-		//System.out.println(this.resultList.size());
-		//System.out.println(calculateSubsetPrice(resultList));
-		//System.out.println(calculateSubsetInfluence(resultList));
-		
-//		for (int i = 0; i < resultList.size(); i++) {
-//			System.out.println(resultList.get(i).getBillboardID());
-//		}
-//		System.out.println("");
-		
+		}		
 	}
 	
 	public ArrayList<Billboard> getResult() {

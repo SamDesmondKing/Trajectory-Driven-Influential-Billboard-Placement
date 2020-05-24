@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class PartSel {
 
     private ArrayList<ArrayList<Billboard>> clusterList;
-    public ArrayList<Billboard> resultList; // this variable is used to store the billboard set of the solution. Do not change or remove it!
-    private int budget; // the budget constraint
+    public ArrayList<Billboard> resultList; 
+    private int budget;
     
     private double maxResult;
     private int q;
@@ -30,7 +30,6 @@ public class PartSel {
     	//Matrixes for holding actual billboards
     	@SuppressWarnings("unchecked")
 		ArrayList<Billboard>[][] I2 = new ArrayList[m + 1][this.budget + 1];
-    	
     	@SuppressWarnings("unchecked")
     	ArrayList<Billboard>[][] S2 = new ArrayList[m + 1][this.budget + 1];
     	
@@ -51,10 +50,10 @@ public class PartSel {
     			this.q = 0;
     			//Find best value of q
     			for (int q = 0; q <= l; q++) {	
-    				double result = I[i-1][l-q] + S[i][q];
-    				if (result >= this.maxResult) {
+    				double resultQ = I[i-1][l-q] + S[i][q];
+    				if (resultQ >= this.maxResult) {
     					this.q = q;
-    					this.maxResult = result;
+    					this.maxResult = resultQ;
     				}		
     			}
     
@@ -82,31 +81,7 @@ public class PartSel {
     	}
     	
     	//Obtain billboard list of best solution (I[m][L])
-    	this.resultList = I2[m][this.budget];
-    	//System.out.println(I[m][this.budget]);
-    	
-    	
-    	/* TESTING
-    	String print = "";
-    	
-    	for (int i = 0; i < I2[m][this.budget].size(); i++) {
-    		print += I2[m][this.budget].get(i).getBillboardID() + ",";
-    	}
-    	
-    	System.out.println(print + "\n");
-    	
-    	
-    	for (int i = 1; i <= m; i++) {
-    		for (int l = 1; l <= budget; l++) {
-    			print += I[i][l] + " ";
-    		}
-    		print += "\n";
-    	}
-    	
-    	System.out.println(print);
-    	*/
-    	
-    	
+    	this.resultList = I2[m][this.budget]; 		
     }
     
 	// Calculate total influence of a given subset.
@@ -117,5 +92,4 @@ public class PartSel {
 		}
 		return influence;
 	}
-
 }

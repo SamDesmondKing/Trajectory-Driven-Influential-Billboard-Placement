@@ -77,6 +77,7 @@ public class EnumSel {
 		}
 	}
 
+	//Save best subset to global var by influence.
 	public ArrayList<Billboard> getBestSubset(ArrayList<ArrayList<Billboard>> result) {
 		ArrayList<Billboard> bestSubset = new ArrayList<Billboard>();
 		for (int i = 0; i < result.size(); i++) {
@@ -94,12 +95,15 @@ public class EnumSel {
 		return bestSubset;
 	}
 
+	//Recursively enumerate all subsets of size tau - first round. 
 	public ArrayList<ArrayList<Billboard>> getSubsets(ArrayList<Billboard> billboardList, int tau) {
 		ArrayList<ArrayList<Billboard>> result = new ArrayList<>();
+		//Calls overloaded method to continue.
 		getSubsets(billboardList, tau, 0, new ArrayList<Billboard>(), result);
 		return result;
 	}
 	
+	//Recursively enumerate all subsets of size tau - overload.
 	public void getSubsets(ArrayList<Billboard> billboardList, int tau, int j, ArrayList<Billboard> subset,
 			ArrayList<ArrayList<Billboard>> result) {
 		if (subset.size() == tau) {
