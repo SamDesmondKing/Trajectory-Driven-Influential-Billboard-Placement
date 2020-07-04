@@ -1,4 +1,4 @@
-# Trajectory-Driven-Influential-Billboard-Placement
+# Trajectory Driven Influential Billboard Placement
 
 Java implimentation of three algorithmic solutions by Zhang et al. for selecting a set of the most influential billboards on a database of given trip trajectories.
 
