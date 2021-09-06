@@ -53,7 +53,6 @@ public class GreedySel {
 				resultList.add(sorted_billboards.get(i).getKey());
 				costSoFar += sorted_billboards.get(i).getKey().getPrice();
 				infSoFar += sorted_billboards.get(i).getKey().getInf();
-				//System.out.println(sorted_billboards.get(i).getKey().getBillboardID());
 			}
 		}
 		
